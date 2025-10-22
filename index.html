@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eSound</title>
+    <style>
+        body {
+            background: black;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+        header {
+            color: rgb(150, 0, 220);
+        }
+        .fixed-header {
+            position: fixed;
+            top: 0%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .title-fixed-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 100px;
+        }
+        a {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .a:hover {
+            color: rgb(190, 50, 255)
+        }
+        .main-header {
+            position: absolute;
+            transform: translateX(-50%);
+            left: 50%;
+            top: 30%;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .playlist {
+            width: 300px;
+            height: 350px;
+            border: none;
+            margin: auto 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        .playlist:hover {
+            transform: scale(1.05);
+        }
+        .playlist-p {
+            font-size: 1.2em;
+            color: rgb(180, 180, 180);
+        }
+        .arrow {
+            width: 20px;
+            height: 20px;
+            border-top: 3px solid rgb(190, 50, 255);
+            border-right: 3px solid rgb(190, 50, 255);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .arrow.right {
+            transform: rotate(45deg);
+        }
+        .arrow.left {
+            transform: rotate(-135deg);
+        }
+        .arrow:hover {
+            transform: scale(1.1) rotate(45deg);
+        }
+        .arrow.left:hover {
+            transform: scale(1.1) rotate(-135deg);
+        }
+
+        .heart {
+            position: relative;
+            width: 18px;
+            height: 16px;
+            transform: rotate(-45deg);
+            transition: 0.2s;
+        }
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 16px;
+            background: transparent;
+            border: 2px solid #888;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            transform: rotate(45deg);
+            transition: all 0.25s ease;
+        }
+        .heart::after {
+            left: 8px;
+        }
+        .heart-advice {
+            position: absolute;
+            transform: translateX(-50%);
+            left: 50%;
+            top: 80%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 30px;
+        }
+        .p {
+            color: white;
+        }
+        footer {
+            position: absolute;
+            transform: translateX(-50%);
+            left: 50%;
+            top: 95%;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .title-fixed-header {
+                gap: 50px;
+            }
+            .main-header {
+                flex-direction: column;
+                top: 20%;
+                gap: 20px;
+            }
+
+            #playlistContainer {
+                flex-direction: column !important;
+                align-items: center;
+            }
+
+            .playlist {
+                margin: 15px 0;
+            }
+
+            .arrow {
+                width: 20px;
+                height: 20px;
+                border-top: 3px solid rgb(190, 50, 255);
+                border-right: 3px solid rgb(190, 50, 255);
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+
+            .arrow.left {
+                transform: rotate(-45deg);
+            }
+            .arrow.left:hover {
+                transform: scale(1.1) rotate(-45deg);
+            }
+
+            .arrow.right {
+                transform: rotate(135deg);
+            }
+            .arrow.right:hover {
+                transform: scale(1.1) rotate(135deg);
+            }
+            .heart-advice {
+                position: absolute;
+                top: 265%;
+            }
+            footer {
+                position: absolute;
+                top: 280%;
+                text-align: center;
+            }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="fixed-header">
+            <div class="title-fixed-header">
+                <img src="img/logo.png" width="75" height="75">
+                <p><strong>eSound</strong></p>
+                <a class="a"><p>Home</p></a>
+                <a class="a"><p>Liked tracks</p></a>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="main-header">
+            <div class="arrow left" id="arrowLeft" style="display:none;"></div>
+
+            <div id="playlistContainer" style="display:flex;">
+                <div class="playlist">
+                    <a href="rock/index.html">
+                        <img src="img/rock2.jpg" width="200" height="200">
+                    </a>
+                    <p class="playlist-p">Rock</p>
+                </div>
+                <div class="playlist">
+                    <a href="jazz/index.html">
+                        <img src="img/jazz.jpg" width="200" height="200">
+                    </a>
+                    <p class="playlist-p">Jazz</p>
+                </div>
+                <div class="playlist">
+                    <a href="rap/index.html">
+                        <img src="img/rap.jpg" width="200" height="200">
+                    </a>
+                    <p class="playlist-p">Rap</p>
+                </div>
+            </div>
+
+            <div class="arrow right" id="arrowRight"></div>
+        </div>
+
+        <div class="heart-advice">
+            <div class="heart"></div>
+            <p class="p">-</p> 
+            <p class="p">to like tracks</p>
+        </div>
+    </section>
+
+    <footer>
+        Got any questions? Contact us: +1 123 456 7890
+    </footer>
+
+    <script>
+        const playlists1 = `
+            <div class="playlist">
+                <a href="rock/index.html">
+                    <img src="img/rock2.jpg" width="200" height="200">
+                </a>
+                <p class="playlist-p">Rock</p>
+            </div>
+            <div class="playlist">
+                <a href="jazz/index.html">
+                    <img src="img/jazz.jpg" width="200" height="200">
+                </a>
+                <p class="playlist-p">Jazz</p>
+            </div>
+            <div class="playlist">
+                <a href="rap/index.html">
+                    <img src="img/rap.jpg" width="200" height="200">
+                </a>
+                <p class="playlist-p">Rap</p>
+            </div>
+        `;
+
+        const playlists2 = `
+            <div class="playlist">
+                <a href="pop/index.html">
+                    <img src="img/pop.jpg" width="200" height="200">
+                </a>
+                <p class="playlist-p">Pop</p>
+            </div>
+            <div class="playlist">
+                <a href="metal/index.html">
+                    <img src="img/metal.jpg" width="200" height="200">
+                </a>
+                <p class="playlist-p">Metal</p>
+            </div>
+            <div class="playlist">
+                <a href="electronic/index.html">
+                    <img src="img/electronic.jpg" width="200" height="200">
+                </a>
+                <p class="playlist-p">Electronic</p>
+            </div>
+        `;
+
+        const container = document.getElementById('playlistContainer');
+        const arrowRight = document.getElementById('arrowRight');
+        const arrowLeft = document.getElementById('arrowLeft');
+
+        let showingFirst = true;
+
+        arrowRight.addEventListener('click', () => {
+            container.innerHTML = playlists2;
+            arrowRight.style.display = 'none';
+            arrowLeft.style.display = 'block';
+        });
+
+        arrowLeft.addEventListener('click', () => {
+            container.innerHTML = playlists1;
+            arrowLeft.style.display = 'none';
+            arrowRight.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
