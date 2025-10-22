@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>eSound - Pop Playlist</title>
+  <style>
+    body {
+      background: black;
+      color: rgb(150, 0, 220);
+      font-family: "Inter", Arial, sans-serif;
+    }
+    header {
+         color: rgb(150, 0, 220);
+         z-index: 10;
+    }
+    .fixed-header {
+        position: fixed;
+        top: 0%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .title-fixed-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 100px;
+    }
+    a {
+        cursor: pointer;
+        transition: color 0.3s ease;
+        text-decoration: none;
+    }
+    .a:hover {
+        color: rgb(190, 50, 255);
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        margin: 50px auto 0;
+    }
+    .track {
+      width: 380px;
+      background: #1e1e1e;
+      border-radius: 10px;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      transition: background 0.2s;
+    }
+
+    .track:hover {
+      background: #2b2b2b;
+    }
+
+    .track-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      margin-right: 15px;
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .artist {
+      font-size: 13px;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .play-btn {
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 12px solid white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .pause-btn {
+      width: 12px;
+      height: 16px;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .pause-btn span {
+      background: white;
+      width: 4px;
+      height: 100%;
+    }
+
+    .play-btn:hover,
+    .pause-btn:hover span {
+      filter: brightness(0.8);
+    }
+
+    .heart {
+      position: relative;
+      width: 18px;
+      height: 16px;
+      cursor: pointer;
+      transform: rotate(-45deg);
+      transition: 0.2s;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 16px;
+      background: transparent;
+      border: 2px solid #888;
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      transform: rotate(45deg);
+      transition: all 0.25s ease;
+    }
+
+    .heart::after {
+      left: 8px;
+    }
+
+    .heart.active::before,
+    .heart.active::after {
+      background: rgb(190, 50, 255);
+      border-color: rgb(190, 50, 255);
+      box-shadow: 0 0 8px rgb(190, 50, 255);
+    }
+
+    .heart:hover::before,
+    .heart:hover::after {
+      border-color: rgb(190, 50, 255);
+    }
+
+    .progress {
+      width: 100%;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: rgb(190, 50, 255);
+      transition: width 0.1s linear;
+    }
+    @media (max-width: 768px) {
+            .title-fixed-header {
+                gap: 50px;
+            }
+    }
+
+  </style>
+</head>
+<body>
+
+    <header>
+        <div class="fixed-header">
+            <div class="title-fixed-header">
+                <img src="img/logo.png" width="75" height="75">
+                <p><strong>eSound</strong></p>
+                <a class="a" href="../index.html"><p>Home</p></a>
+                <a class="a" href="../liked_tracks/index.html"><p>Liked tracks</p></a>
+            </div>
+        </div>
+    </header>
+    <section class="main">
+  <div id="playlist">
+    <div class="track" data-src="music/pop1.mp3">
+      <div class="track-info">
+        <span class="title">Pop 1</span>
+        <span class="artist">Pop author 1</span>
+        <div class="progress"><div class="progress-bar"></div></div>
+      </div>
+      <div class="controls">
+        <div class="play-btn"></div>
+        <div class="heart"></div>
+      </div>
+    </div>
+
+    <div class="track" data-src="music/pop2.mp3">
+      <div class="track-info">
+        <span class="title">Pop 2</span>
+        <span class="artist">Pop author 2</span>
+        <div class="progress"><div class="progress-bar"></div></div>
+      </div>
+      <div class="controls">
+        <div class="play-btn"></div>
+        <div class="heart"></div>
+      </div>
+    </div>
+
+    <div class="track" data-src="music/pop3.mp3">
+      <div class="track-info">
+        <span class="title">Pop 3</span>
+        <span class="artist">Pop author 3</span>
+        <div class="progress"><div class="progress-bar"></div></div>
+      </div>
+      <div class="controls">
+        <div class="play-btn"></div>
+        <div class="heart"></div>
+      </div>
+    </div>
+    <div class="track" data-src="music/pop4.mp3">
+      <div class="track-info">
+        <span class="title">Pop 4</span>
+        <span class="artist">Pop author 4</span>
+        <div class="progress"><div class="progress-bar"></div></div>
+      </div>
+      <div class="controls">
+        <div class="play-btn"></div>
+        <div class="heart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+  <audio id="audio"></audio>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("audio");
+  const tracks = document.querySelectorAll(".track");
+  let currentTrack = null;
+  let progressInterval = null;
+
+  function updateProgressBar(track, progress) {
+    const progressBar = track.querySelector(".progress-bar");
+    const width = (progress / audio.duration) * 100;
+    progressBar.style.width = `${width}%`;
+  }
+
+  function resetAllTracks() {
+    tracks.forEach(t => {
+      const btn = t.querySelector(".controls");
+      btn.innerHTML = `
+        <div class="play-btn"></div>
+        <div class="heart ${t.querySelector('.heart').classList.contains('active') ? 'active' : ''}"></div>
+      `;
+      t.querySelector(".progress-bar").style.width = "0%";
+    });
+  }
+
+  function playTrack(track) {
+    const src = track.getAttribute("data-src");
+
+    if (currentTrack === track && !audio.paused) {
+      audio.pause();
+      clearInterval(progressInterval);
+      const controls = track.querySelector(".controls");
+      controls.querySelector(".pause-btn")?.remove();
+      controls.insertAdjacentHTML("afterbegin", `<div class="play-btn"></div>`);
+      return;
+    }
+
+    resetAllTracks();
+    currentTrack = track;
+    audio.src = src;
+    audio.play();
+
+    const controls = track.querySelector(".controls");
+    controls.querySelector(".play-btn")?.remove();
+    controls.insertAdjacentHTML("afterbegin", `
+      <div class="pause-btn">
+        <span></span><span></span>
+      </div>
+    `);
+
+    clearInterval(progressInterval);
+    progressInterval = setInterval(() => {
+      if (!audio.paused && audio.duration) {
+        updateProgressBar(track, audio.currentTime);
+      }
+    }, 100);
+  }
+
+  tracks.forEach(track => {
+    track.addEventListener("click", e => {
+      const playBtn = track.querySelector(".play-btn");
+      const pauseBtn = track.querySelector(".pause-btn");
+      const heart = track.querySelector(".heart");
+
+      if (e.target === playBtn || e.target.closest(".play-btn")) {
+        playTrack(track);
+      }
+
+      if (e.target.closest(".pause-btn")) {
+        audio.pause();
+        clearInterval(progressInterval);
+        const controls = track.querySelector(".controls");
+        controls.querySelector(".pause-btn")?.remove();
+        controls.insertAdjacentHTML("afterbegin", `<div class="play-btn"></div>`);
+      }
+
+      if (e.target === heart || e.target.closest(".heart")) {
+        heart.classList.toggle("active");
+      }
+    });
+  });
+  function saveLikedTrack(title, artist, src) {
+    const liked = JSON.parse(localStorage.getItem("likedTracks") || "[]");
+    const exists = liked.some(t => t.src === src);
+    if (!exists) {
+      liked.push({ title, artist, src });
+      localStorage.setItem("likedTracks", JSON.stringify(liked));
+    }
+  }
+
+  function removeLikedTrack(src) {
+    let liked = JSON.parse(localStorage.getItem("likedTracks") || "[]");
+    liked = liked.filter(t => t.src !== src);
+    localStorage.setItem("likedTracks", JSON.stringify(liked));
+  }
+
+  tracks.forEach(track => {
+    const heart = track.querySelector(".heart");
+    heart.addEventListener("click", e => {
+      e.stopPropagation();
+      heart.classList.toggle("active");
+
+      const title = track.querySelector(".title").textContent;
+      const artist = track.querySelector(".artist").textContent;
+      const src = track.getAttribute("data-src");
+
+      if (heart.classList.contains("active")) {
+        saveLikedTrack(title, artist, src);
+      } else {
+        removeLikedTrack(src);
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
